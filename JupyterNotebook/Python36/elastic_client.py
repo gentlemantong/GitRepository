@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 @author: tongxiao
-@email: tongxiao@zjaisino.com
+@email: tongxiao@yeah.net
 @created_time: 2018-01-04 13:06
 """
 import logging
