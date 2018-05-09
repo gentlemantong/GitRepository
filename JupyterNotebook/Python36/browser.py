@@ -14,11 +14,15 @@ from selenium.webdriver.firefox.options import Options
 
 class Browser(object):
     """
-    浏览器对象，基于selenium，单例模式，自动回收驱动对象。
+    浏览器对象，基于selenium，单例模式，多线程安全，自动回收驱动对象。
 
     最新的selenium声称不支持PhantomJS了，稳妥起见，这里使用无头的Firefox。
     使用之前，除了安装selenium之外，还需要安装Firefox的驱动，并配置到系统环境变量。
     驱动下载地址：https://github.com/mozilla/geckodriver/releases
+    
+    使用示例:
+    b = Browser()
+    b.browser.get('https://www.baidu.com/')
     """
 
     _mutex = threading.Lock()
