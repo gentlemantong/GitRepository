@@ -9,17 +9,16 @@
 import threading
 
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
 
 
 class Browser(object):
     """
     浏览器对象，基于selenium，单例模式，多线程安全，自动回收驱动对象。
 
-    最新的selenium声称不支持PhantomJS了，稳妥起见，这里使用无头的Firefox。
-    使用之前，除了安装selenium之外，还需要安装Firefox的驱动，并配置到系统环境变量。
-    驱动下载地址：https://github.com/mozilla/geckodriver/releases
-    
+    最新的selenium声称不支持PhantomJS了，考虑到服务器上运行的问题，这里使用2.53.6版本的selenium。
+    使用之前，除了安装selenium（pip install selenium==2.53.6）之外，还需要安装PhantomJS，并配置到系统环境变量中。
+    PhantomJS下载地址：http://phantomjs.org/download.html
+
     使用示例:
     b = Browser()
     b.browser.get('https://www.baidu.com/')
@@ -38,10 +37,9 @@ class Browser(object):
             with Browser._mutex:
                 if not hasattr(Browser, '_instance'):
                     Browser._instance = object.__new__(cls)
-                    options = Options()
-                    options.add_argument('-headless')
-                    Browser._instance.browser = webdriver.Firefox(
-                        executable_path='geckodriver', firefox_options=options)
+                    Browser._instance.browser = webdriver.PhantomJS()
+                    Browser._instance.browser.viewportSize = {'width': 1366, 'height': 768}
+                    Browser._instance.browser.maximize_window()
         return Browser._instance
 
     def __del__(self):
